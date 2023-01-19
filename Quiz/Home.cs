@@ -1,3 +1,4 @@
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -102,6 +103,31 @@ namespace Quiz
             rightPane.FindElements(By.TagName("div"))[0].FindElement(By.TagName("button")).Click();
 
             Thread.Sleep(5000);
+            //find popup
+
+            // driver.WindowHandles = driver.p;
+            IWebElement rating = driver.FindElement(By.Id("review-modal-title"));
+            String modal = rating.Text;
+
+            IWebElement ratingEmail = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div[2]/div[1]/div/input"));
+            ratingEmail.SendKeys("omar@onescreensolutions.com");
+
+            IWebElement ratingComment = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div[2]/div[2]/div/textarea[1]"));
+            ratingComment.SendKeys("Test Comment");
+
+            IWebElement ratingStar = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div[1]/div/span[1]/span[2]"));
+            ratingStar.Click();
+
+            IWebElement ratingContinue = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[3]/button[1]"));
+            ratingContinue.Click();
+
+            IWebElement continueWithoutCorrectBtn = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[1]/button"));
+            continueWithoutCorrectBtn.Click();
+
+            //
+           
+
+            Thread.Sleep(2000);
         }
 
         public void SelectQuestions()
