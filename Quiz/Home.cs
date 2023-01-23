@@ -2,6 +2,9 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using System.Windows;
+using System.Threading.Tasks;
+using TextCopy;
 
 namespace Quiz
 {
@@ -121,13 +124,29 @@ namespace Quiz
             IWebElement ratingContinue = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[3]/button[1]"));
             ratingContinue.Click();
 
+            Thread.Sleep(2000);
+
             IWebElement continueWithoutCorrectBtn = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[1]/button"));
             continueWithoutCorrectBtn.Click();
 
             //
-           
-
+            //String copied = System.Windows.Clipboard.GetText();
+            var c = clipBoardAsync();
             Thread.Sleep(2000);
+        }
+
+
+        //public async void clipBoardAsync()
+        //{
+        //    var text = await ClipboardService.GetTextAsync();
+        //    Console.WriteLine(text);
+        //}
+
+        public async Task<string> clipBoardAsync()
+        {
+            var text = await ClipboardService.GetTextAsync();
+            Console.WriteLine(text);
+            return text;
         }
 
         public void SelectQuestions()
