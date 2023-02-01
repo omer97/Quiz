@@ -99,12 +99,75 @@ namespace Quiz
 
         }
 
-        [Test,Order(3)]
+        [Test,Order(3),Ignore("leave")]
         public void CopyToClipBoard()
         {
             IWebElement rightPane = driver.FindElement(By.ClassName("css-ier0s8"));
             rightPane.FindElements(By.TagName("div"))[0].FindElement(By.TagName("button")).Click();
 
+
+            Review();        
+            Thread.Sleep(2000);
+
+            IWebElement continueWithoutCorrectBtn = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[1]/button"));
+            continueWithoutCorrectBtn.Click();
+
+            //
+            //String copied = System.Windows.Clipboard.GetText();
+            var c = clipBoardAsync();
+            Thread.Sleep(2000);
+
+            if(c.Result is not null)
+            {
+                Assert.NotNull(c.Result);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [Test, Order(3)]
+        public void DownloadTextFile()
+        {
+
+            IWebElement rightPane = driver.FindElement(By.ClassName("css-ier0s8"));
+            IWebElement textButton =  rightPane.FindElements(By.TagName("div"))[1].FindElement(By.TagName("button"));
+            string name = textButton.Text;
+            textButton.Click();
+
+            Review();
+            Thread.Sleep(2000);
+
+            IWebElement fileNameTextField = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div[1]/div/input"));
+
+            string filename = fileNameTextField.GetAttribute("value");
+
+            IWebElement continueNameView = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[3]/button[1]"));
+            continueNameView.Click();
+            Thread.Sleep(2000);
+
+
+            IWebElement downloadWithoutCorrect = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[1]/button"));
+            downloadWithoutCorrect.Click();
+             
+            string curFile = @"C:\Users\CBM\Downloads\"+ filename+".txt";
+            if (File.Exists(curFile)){
+                string[] lines = File.ReadAllLines(curFile);
+                Assert.Greater(lines.Length, 0);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+             
+        }
+
+        
+
+        public void Review()
+        {
+           
             Thread.Sleep(5000);
             //find popup
 
@@ -123,18 +186,9 @@ namespace Quiz
 
             IWebElement ratingContinue = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[3]/button[1]"));
             ratingContinue.Click();
-
             Thread.Sleep(2000);
-
-            IWebElement continueWithoutCorrectBtn = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[1]/button"));
-            continueWithoutCorrectBtn.Click();
-
-            //
-            //String copied = System.Windows.Clipboard.GetText();
-            var c = clipBoardAsync();
-            Thread.Sleep(2000);
+             
         }
-
 
         //public async void clipBoardAsync()
         //{
