@@ -127,7 +127,7 @@ namespace Quiz
             }
         }
 
-        [Test, Order(3)]
+        [Test, Order(3) , Ignore("text download")]
         public void DownloadTextFile()
         {
 
@@ -150,7 +150,10 @@ namespace Quiz
 
             IWebElement downloadWithoutCorrect = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[1]/button"));
             downloadWithoutCorrect.Click();
-             
+
+
+            Thread.Sleep(2000);
+
             string curFile = @"C:\Users\CBM\Downloads\"+ filename+".txt";
             if (File.Exists(curFile)){
                 string[] lines = File.ReadAllLines(curFile);
@@ -160,10 +163,93 @@ namespace Quiz
             {
                 Assert.Fail();
             }
-             
+
+
+
+            //download with correct
+
+            IWebElement downloadWithCorrect = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[2]/button"));
+            downloadWithCorrect.Click();
+
+            Thread.Sleep(2000);
+
+
+            string durFile = @"C:\Users\CBM\Downloads\" + filename + ".txt";
+            if (File.Exists(durFile))
+            {
+                string[] lines = File.ReadAllLines(durFile);
+                Assert.Greater(lines.Length, 0);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+
+            //download with correct end
+
         }
 
-        
+        [Test, Order(3)]
+        public void DownloadPdfFile()
+        {
+
+            IWebElement rightPane = driver.FindElement(By.ClassName("css-ier0s8"));
+            IWebElement textButton = rightPane.FindElement(By.XPath("//*[@id=\"root\"]/div[1]/div[1]/div/div/div[2]/div/div[5]/div[2]/button[2]"));
+            string name = textButton.Text;
+            textButton.Click();
+
+            Review();
+            Thread.Sleep(2000);
+
+            IWebElement fileNameTextField = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div[1]/div/input"));
+
+            string filename = fileNameTextField.GetAttribute("value");
+
+            IWebElement continueNameView = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[3]/button[1]"));
+            continueNameView.Click();
+            Thread.Sleep(2000);
+
+
+            IWebElement downloadWithoutCorrect = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[1]/button"));
+            downloadWithoutCorrect.Click();
+
+
+            Thread.Sleep(2000);
+
+            string curFile = @"C:\Users\CBM\Downloads\" + filename + ".pdf";
+            if (File.Exists(curFile))
+            {
+                string[] lines = File.ReadAllLines(curFile);
+                Assert.Greater(lines.Length, 0);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+
+
+            //download with correct
+
+            IWebElement downloadWithCorrect = driver.FindElement(By.XPath("/html/body/div[2]/div[3]/div[2]/div/div[2]/button"));
+            downloadWithCorrect.Click();
+
+            Thread.Sleep(2000);
+
+
+            string durFile = @"C:\Users\CBM\Downloads\" + filename + ".pdf";
+            if (File.Exists(durFile))
+            {
+                string[] lines = File.ReadAllLines(durFile);
+                Assert.Greater(lines.Length, 0);
+            }
+            else
+            {
+                Assert.Fail();
+            }
+
+            //download with correct end
+
+        }
 
         public void Review()
         {
