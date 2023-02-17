@@ -15,7 +15,7 @@ namespace Quiz
         public void Setup()
         {
             driver = new ChromeDriver("C:\\Users\\CBM\\Downloads\\chromedriver_win32\\chromedriver.exe");
-            driver.Navigate().GoToUrl("https://quizwiz.ai/");
+            driver.Navigate().GoToUrl("https://quizbot.onescreensolutions.com:3000/");
 
         }
 
@@ -174,7 +174,7 @@ namespace Quiz
             Thread.Sleep(2000);
 
 
-            string durFile = @"C:\Users\CBM\Downloads\" + filename + ".txt";
+            string durFile = @"C:\Users\CBM\Downloads\" + filename + "-correct.txt";
             if (File.Exists(durFile))
             {
                 string[] lines = File.ReadAllLines(durFile);
@@ -193,7 +193,7 @@ namespace Quiz
         public void DownloadPdfFile()
         {
 
-            IWebElement rightPane = driver.FindElement(By.ClassName("css-ier0s8"));
+            IWebElement rightPane = driver.FindElement(By.ClassName("css-8nnoh3"));
             IWebElement textButton = rightPane.FindElement(By.XPath("//*[@id=\"root\"]/div[1]/div[1]/div/div/div[2]/div/div[5]/div[2]/button[2]"));
             string name = textButton.Text;
             textButton.Click();
@@ -236,7 +236,7 @@ namespace Quiz
             Thread.Sleep(2000);
 
 
-            string durFile = @"C:\Users\CBM\Downloads\" + filename + ".pdf";
+            string durFile = @"C:\Users\CBM\Downloads\" + filename + "-correct.pdf";
             if (File.Exists(durFile))
             {
                 string[] lines = File.ReadAllLines(durFile);
